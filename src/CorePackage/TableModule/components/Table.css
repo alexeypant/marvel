@@ -1,0 +1,18 @@
+table {
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+
+thead tr {
+    background-color: lightgreen;
+}
+
+tbody tr:nth-child(even) {
+    background-color: lightgrey;
+}
+
+table td {
+    border: 1px solid gray;
+}
+
+
