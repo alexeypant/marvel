@@ -1,8 +1,8 @@
 import React from 'react';
 import './Table.css';
-import { Row } from '..';
+import { Row } from './Row';
 
-type TColumn = {
+export type TColumn = {
   title: string,
   dataIndex: string,
   key: string,
@@ -19,15 +19,15 @@ type Props = {
 };
 
 export const Table = ({ data, columns }: Props) => {
-  const headers = columns.map(col => col.title);
-  const rowsCells = data.map(dataItem => columns.map(coll => dataItem[coll.key]));
   return (
     <table className="tableContainer">
       <thead>
-        <Row cells={headers}/>
+        <tr>
+          {columns.map((col, index) => <td key={index}>{col.title}</td>)}
+        </tr>
       </thead>
       <tbody>
-        {rowsCells.map(row => <Row key={row[0]} cells={row}/>)}
+        {data.map((row, index) => <Row key={index} columns={columns} row={row}/>)}
       </tbody>
     </table>
   );

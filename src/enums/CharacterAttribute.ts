@@ -1,4 +1,4 @@
-export enum ECharacterAttribute {
+export enum CharacterAttribute {
   id = 'id',
   name = 'name',
   description = 'description',

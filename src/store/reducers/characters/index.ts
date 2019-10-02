@@ -1,25 +1,25 @@
-import { TRequestCharacterAction } from '../actions/actionCreators';
-import { ECharactersRequestActionName } from '../actions/ECharactersRequestActionName';
-import { Character } from '../../types/Character';
-import { State } from '../types/State';
+import { State } from '../../types/State';
 import { initialState } from './constants';
+import { TRequestCharacterAction } from '../../actions/characters/actionCreators';
+import { Action } from '../../actions/characters/Action';
+import { Character } from '../../../types/Character';
 
 export const charactersRequestReducer = (state: State = initialState, action: TRequestCharacterAction): State => {
   switch (action.type) {
-    case ECharactersRequestActionName.Requested:
+    case Action.Requested:
       return {
         ...state,
         loading: true,
         error: false,
       };
-    case ECharactersRequestActionName.RequestedSucceeded:
+    case Action.RequestedSucceeded:
       const characters: Character[] = action.data ? action.data : [];
       return {
         characters,
         loading: false,
         error: false,
       };
-    case ECharactersRequestActionName.RequestedFailed:
+    case Action.RequestedFailed:
       return {
         characters: [],
         loading: false,

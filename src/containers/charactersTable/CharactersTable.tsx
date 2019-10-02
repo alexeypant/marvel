@@ -1,19 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { fetchCharacters } from '../../store/actions/actionCreators';
+import { fetchCharacters } from '../../store/actions/characters/actionCreators';
 import { DataTable } from '../../components/commons';
 import { connect } from 'react-redux';
 import { columns } from './constants';
 import { State } from '../../store/types/State';
-import { Character } from '../../types/Character';
-import { convertCharactersToTableData } from './convertCharactersToTableData';
-import { limit } from '../../store/sagas/constants';
+import { convertCharacters } from './utils';
+import { limit } from '../../store/sagas/characters/constants';
+import { TData } from '../../components/commons/dataTable/Table';
 
 type Props = {
-  characters: Character[] | null;
+  data: TData[];
   handleFetchCharacters: (offset: number) => void;
 };
 
-const CharactersTable: React.FC<Props> = ({ characters, handleFetchCharacters }) => {
+const CharactersTable: React.FC<Props> = ({ data = [], handleFetchCharacters }) => {
   const [offset, setOffset] = useState(0);
   const [isDisabledPrevious, setIsDisabledPrevious] = useState(true);
 
@@ -44,10 +44,10 @@ const CharactersTable: React.FC<Props> = ({ characters, handleFetchCharacters })
   );
 
   return (
-    characters && (
+    data && (
       <div className="App">
         <DataTable
-            data={convertCharactersToTableData(characters)}
+            data={data}
             columns={columns}
             isDisabledPrevious={isDisabledPrevious}
             onNextClick={handleClickNext}
@@ -60,7 +60,7 @@ const CharactersTable: React.FC<Props> = ({ characters, handleFetchCharacters })
 
 const mapStateToProps = (state: State) => {
   return {
-    characters: state.characters.length > 0 ? state.characters : null,
+    data: convertCharacters(state.characters),
   };
 };
 

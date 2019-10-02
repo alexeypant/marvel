@@ -1,5 +1,5 @@
 import { applyMiddleware, compose, createStore } from 'redux';
-import { charactersRequestReducer } from './reducers/charactersRequestReducer';
+import { charactersRequestReducer } from './reducers/characters';
 import createSagaMiddleware from 'redux-saga';
 
 export const sagaMiddleware = createSagaMiddleware();

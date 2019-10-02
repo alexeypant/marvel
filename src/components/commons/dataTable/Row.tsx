@@ -1,13 +1,13 @@
 import React from 'react';
-
-type TCellValue = string | number;
+import { TColumn, TData } from './Table';
 
 type Props = {
-  cells: TCellValue[];
+  columns: TColumn[];
+  row: TData;
 };
 
-export const Row = ({ cells }: Props) => (
+export const Row = ({ columns, row }: Props) => (
     <tr>
-      {cells.map((cell, index) => <td key={index}>{cell}</td>)}
+      {columns.map((col, index) => <td key={index}>{row[col.key]}</td>)}
     </tr>
 );

@@ -4,8 +4,8 @@ import './index.css';
 import ConnectedApp from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
-import { watchFetchCharacters } from './store/sagas/sagas';
 import { sagaMiddleware, store } from './store';
+import { watchFetchCharacters } from './store/sagas/characters/sagas';
 
 sagaMiddleware.run(watchFetchCharacters);
 
