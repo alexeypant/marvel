@@ -5,6 +5,7 @@ import { EventList } from './EventList';
 import { SeriesList } from './SeriesList';
 import { CharacterAttribute } from '../enums/CharacterAttribute';
 
+
 export type Character = {
   [CharacterAttribute.id]?: number; // The unique ID of the character resource.,
   [CharacterAttribute.name]?: string // The name of the character.,

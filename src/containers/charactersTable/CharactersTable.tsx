@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { fetchCharacters } from '../../store/actions/characters/actionCreators';
 import { DataTable } from '../../components/commons';
 import { connect } from 'react-redux';
 import { columns } from './constants';
 import { State } from '../../store/types/State';
-import { convertCharacters } from './utils';
 import { limit } from '../../store/sagas/characters/constants';
 import { TData } from '../../components/commons/dataTable/Table';
+import { convertCharacters } from './utils';
+import { fetchCharacters } from '../../store/actions/characters/actionCreators';
 
 type Props = {
   data: TData[];
