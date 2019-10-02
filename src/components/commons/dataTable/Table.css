@@ -27,3 +27,8 @@ table td:nth-child(2) {
 table td:nth-child(3) {
     width: 800px;
 }
+
+table tbody tr input {
+    width: 100%;
+    font-size: inherit;
+}

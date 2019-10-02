@@ -27,6 +27,11 @@ export const Table = ({ data, columns }: Props) => {
         </tr>
       </thead>
       <tbody>
+        <tr>
+          {columns.map((col, index) => <td key={index}>
+            <input type="text" name={col.title} placeholder={col.title} />
+          </td>)}
+        </tr>
         {data.map((row, index) => <Row key={index} columns={columns} row={row}/>)}
       </tbody>
     </table>
