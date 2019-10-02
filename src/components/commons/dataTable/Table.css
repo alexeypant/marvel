@@ -13,6 +13,17 @@ tbody tr:nth-child(even) {
 
 table td {
     border: 1px solid gray;
+    overflow: hidden;
 }
 
+table td:nth-child(1) {
+    width: 100px;
+}
 
+table td:nth-child(2) {
+    width: 300px;
+}
+
+table td:nth-child(3) {
+    width: 800px;
+}
