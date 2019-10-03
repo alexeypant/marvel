@@ -6,14 +6,16 @@ import { State } from '../../store/types/State';
 import { limit } from '../../store/sagas/characters/constants';
 import { TData } from '../../components/commons/dataTable/Table';
 import { convertCharacters } from './utils';
-import { fetchCharacters } from '../../store/actions/characters/actionCreators';
+import { fetchCharacters, fetchCharactersNameStartWith } from '../../store/actions/characters/actionCreators';
+import { CharacterAttribute } from '../../enums/CharacterAttribute';
 
 type Props = {
   data: TData[];
-  handleFetchCharacters: (offset: number) => void;
+  handleFetchCharacters: (offset: number, nameStartsWith?: string) => void;
+  handleFetchCharactersNameStartWith: (offset: number, nameStartsWith?: string) => void;
 };
 
-const CharactersTable: React.FC<Props> = ({ data = [], handleFetchCharacters }) => {
+const CharactersTable: React.FC<Props> = ({ data = [], handleFetchCharacters, handleFetchCharactersNameStartWith }) => {
   const [offset, setOffset] = useState(0);
   const [isDisabledPrevious, setIsDisabledPrevious] = useState(true);
 
@@ -22,39 +24,52 @@ const CharactersTable: React.FC<Props> = ({ data = [], handleFetchCharacters }) 
   }, []);
 
   const handleClickNext = useCallback(
-    () => {
-      const nextOffset = offset + limit;
-      setOffset(nextOffset);
-      setIsDisabledPrevious(false);
-      handleFetchCharacters(nextOffset);
-    },
-    [offset, isDisabledPrevious],
+      () => {
+        const nextOffset = offset + limit;
+        setOffset(nextOffset);
+        setIsDisabledPrevious(false);
+        handleFetchCharacters(nextOffset);
+      },
+      [offset, isDisabledPrevious],
   );
 
   const handleClickPrevious = useCallback(
-    () => {
-      const nextOffset = (offset - limit) > 0 ? (offset - limit) : 0;
-      if (nextOffset === 0) {
-        setIsDisabledPrevious(true);
-      }
-      setOffset(nextOffset);
-      handleFetchCharacters(nextOffset);
-    },
-    [offset, isDisabledPrevious],
+      () => {
+        const nextOffset = (offset - limit) > 0 ? (offset - limit) : 0;
+        if (nextOffset === 0) {
+          setIsDisabledPrevious(true);
+        }
+        setOffset(nextOffset);
+        handleFetchCharacters(nextOffset);
+      },
+      [offset, isDisabledPrevious],
   );
 
+  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    if (target.name === CharacterAttribute.name) {
+      const nameStartsWith = target.value.trim();
+      if (nameStartsWith.length > 0) {
+        setOffset(0);
+        handleFetchCharactersNameStartWith(0, nameStartsWith);
+      } else {
+        handleFetchCharactersNameStartWith(0);
+      }
+    }
+  };
+
   return (
-    data && (
-      <div className="App">
-        <DataTable
-            data={data}
-            columns={columns}
-            isDisabledPrevious={isDisabledPrevious}
-            onNextClick={handleClickNext}
-            onPreviousClick={handleClickPrevious}
-        />
-      </div>
-    )
+      data && (
+          <div className="App">
+            <DataTable
+                data={data}
+                columns={columns}
+                isDisabledPrevious={isDisabledPrevious}
+                onNextClick={handleClickNext}
+                onPreviousClick={handleClickPrevious}
+                onSearchInputChange={handleChange}
+            />
+          </div>
+      )
   );
 };
 
@@ -64,4 +79,8 @@ const mapStateToProps = (state: State) => {
   };
 };
 
-export const CharactersTableConnected = connect(mapStateToProps, { handleFetchCharacters: fetchCharacters })(CharactersTable);
+export const CharactersTableConnected = connect(mapStateToProps,
+  {
+    handleFetchCharacters: fetchCharacters,
+    handleFetchCharactersNameStartWith: fetchCharactersNameStartWith,
+  })(CharactersTable);

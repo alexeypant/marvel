@@ -5,9 +5,11 @@ import ConnectedApp from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { sagaMiddleware, store } from './store';
-import { watchFetchCharacters } from './store/sagas/characters/sagas';
+import {
+  rootSaga,
+} from './store/sagas/characters/sagas';
 
-sagaMiddleware.run(watchFetchCharacters);
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
     <Provider store={store}>

@@ -1,6 +1,8 @@
 table {
     border: 1px solid gray;
     border-collapse: collapse;
+    table-layout: fixed;
+    white-space: nowrap;
 }
 
 thead tr {
@@ -14,6 +16,7 @@ tbody tr:nth-child(even) {
 table td {
     border: 1px solid gray;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 table td:nth-child(1) {
@@ -21,11 +24,14 @@ table td:nth-child(1) {
 }
 
 table td:nth-child(2) {
-    width: 300px;
+    width: 500px;
+    max-width: 500px;
 }
 
 table td:nth-child(3) {
-    width: 800px;
+    max-width: 1200px;
+    min-width: 1200px;
+    width: 1200px;
 }
 
 table tbody tr input {

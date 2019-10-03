@@ -1,38 +1,55 @@
 import { Character } from '../../../types/Character';
-import { Action } from './Action';
+import { CharactersAction } from './CharactersAction';
 
 export const requestCharacter = () => {
   return {
-    type: Action.Requested,
+    type: CharactersAction.Request,
   };
 };
 
 export const requestCharacterSuccess = (characters: Character[]) => {
   return {
-    type: Action.RequestedSucceeded,
+    type: CharactersAction.RequestSucceeded,
     data: characters,
   };
 };
 
 export const requestCharacterFailed = () => {
   return {
-    type: Action.RequestedFailed,
+    type: CharactersAction.RequestFailed,
   };
 };
 
-export const fetchCharacters = (offset: number) => {
+export const fetchCharacters = (offset: number, nameStartsWith?: string) => {
   return {
     offset,
-    type: Action.FetchedCharacters,
+    nameStartsWith,
+    type: CharactersAction.Fetch,
+  };
+};
+
+export const fetchCharactersNameStartWith = (offset: number, nameStartsWith?: string) => {
+  return {
+    offset,
+    nameStartsWith,
+    type: CharactersAction.FetchNameStartsWith,
+  };
+};
+
+export const debouncedFetch = (action: FetchCharactersAction) => {
+  return {
+    ...action,
+    type: CharactersAction.DebouncedFetch,
   };
 };
 
 export type TRequestCharacterAction = {
-  type: Action;
+  type: CharactersAction;
   data?: Character[];
 };
 
 export type FetchCharactersAction = {
-  type: Action;
+  type: CharactersAction;
   offset: number;
+  nameStartsWith?: string;
 };
