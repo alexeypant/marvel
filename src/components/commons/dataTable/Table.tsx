@@ -21,21 +21,34 @@ type Props = {
 };
 
 export const Table = ({ data, columns, onSearchInputChange }: Props) => {
+
+  const renderRows = (columns: TColumn[]) => {
+    return columns.map((col, index) => (
+      <td key={index}>
+        <input
+            type="text"
+            name={col.key}
+            placeholder={col.title}
+            disabled={col.isSearchDisabled}
+            onChange={onSearchInputChange}
+        />
+      </td>
+    ));
+  };
+
   return (
-      <table className="tableContainer">
-        <thead>
-        <tr>
-          {columns.map((col, index) => <td key={index}>{col.title}</td>)}
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          {columns.map((col, index) => <td key={index}>
-            <input type="text" name={col.key} placeholder={col.title} disabled={col.isSearchDisabled} onChange={onSearchInputChange}/>
-          </td>)}
-        </tr>
-        {data.map((row, index) => <Row key={index} columns={columns} row={row}/>)}
-        </tbody>
-      </table>
+    <table className="tableContainer">
+      <thead>
+      <tr>
+        {columns.map((col, index) => <td key={index}>{col.title}</td>)}
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        {renderRows(columns)}
+      </tr>
+      {data.map((row, index) => <Row key={index} columns={columns} row={row}/>)}
+      </tbody>
+    </table>
   );
 };

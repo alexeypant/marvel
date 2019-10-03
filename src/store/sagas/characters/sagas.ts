@@ -21,7 +21,7 @@ function* throttleFetch(action: FetchCharactersAction) {
 }
 
 function* fetchCharactersAsync(action: FetchCharactersAction) {
-  console.log('from fetch async');
+  CharactersService.isFetching() && CharactersService.abort();
   try {
     yield put(requestCharacter());
     const characters: Character[] = yield call(() => CharactersService.get(action.offset, action.nameStartsWith));
