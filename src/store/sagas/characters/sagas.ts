@@ -9,7 +9,7 @@ import {
 } from '../../actions/characters/actionCreators';
 import { Character } from '../../../types/Character';
 import { CharactersService } from '../../../services/characters/CharactersService';
-import { BackoffService } from '../../../services/backoff/BackoffService';
+import { BackoffFactory } from '../../../services/backoff/BackoffFactory';
 
 export function* rootSaga() {
   yield takeEvery(CharactersAction.Fetch, fetchCharactersAsync);
@@ -25,14 +25,16 @@ function* fetchCharactersAsync(action: FetchCharactersAction) {
   CharactersService.isFetching() && CharactersService.abort();
   try {
     yield put(requestCharacter());
-    // const characters: Character[] = yield call(() => CharactersService.get(action.offset, action.nameStartsWith));
-    const characters: Character[] = yield call(() => BackoffService.try(
-      CharactersService.get(action.offset, action.nameStartsWith),
-      CharactersService.handleJson,
-      CharactersService.handleResponse,
+    const backoff = new BackoffFactory(
+      CharactersService.request(action.offset, action.nameStartsWith),
+      [
+        CharactersService.parseJson,
+        CharactersService.unwrapCharacters,
+      ],
       CharactersService.handleError,
       CharactersService.handleFinally,
-      ));
+    );
+    const characters: Character[] = yield call(() => backoff.try(5));
     yield put(requestCharacterSuccess(characters));
   } catch (error) {
     yield put(requestCharacterFailed());

@@ -24,25 +24,25 @@ const CharactersTable: React.FC<Props> = ({ data = [], handleFetchCharacters, ha
   }, []);
 
   const handleClickNext = useCallback(
-      () => {
-        const nextOffset = offset + limit;
-        setOffset(nextOffset);
-        setIsDisabledPrevious(false);
-        handleFetchCharacters(nextOffset);
-      },
-      [offset, isDisabledPrevious],
+    () => {
+      const nextOffset = offset + limit;
+      setOffset(nextOffset);
+      setIsDisabledPrevious(false);
+      handleFetchCharacters(nextOffset);
+    },
+    [offset, isDisabledPrevious],
   );
 
   const handleClickPrevious = useCallback(
-      () => {
-        const nextOffset = (offset - limit) > 0 ? (offset - limit) : 0;
-        if (nextOffset === 0) {
-          setIsDisabledPrevious(true);
-        }
-        setOffset(nextOffset);
-        handleFetchCharacters(nextOffset);
-      },
-      [offset, isDisabledPrevious],
+    () => {
+      const nextOffset = (offset - limit) > 0 ? (offset - limit) : 0;
+      if (nextOffset === 0) {
+        setIsDisabledPrevious(true);
+      }
+      setOffset(nextOffset);
+      handleFetchCharacters(nextOffset);
+    },
+    [offset, isDisabledPrevious],
   );
 
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,18 +58,18 @@ const CharactersTable: React.FC<Props> = ({ data = [], handleFetchCharacters, ha
   };
 
   return (
-      data && (
-          <div className="App">
-            <DataTable
-                data={data}
-                columns={columns}
-                isDisabledPrevious={isDisabledPrevious}
-                onNextClick={handleClickNext}
-                onPreviousClick={handleClickPrevious}
-                onSearchInputChange={handleChange}
-            />
-          </div>
-      )
+    data && (
+      <div className="App">
+        <DataTable
+            data={data}
+            columns={columns}
+            isDisabledPrevious={isDisabledPrevious}
+            onNextClick={handleClickNext}
+            onPreviousClick={handleClickPrevious}
+            onSearchInputChange={handleChange}
+        />
+      </div>
+    )
   );
 };
 
