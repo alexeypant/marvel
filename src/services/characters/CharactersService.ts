@@ -1,18 +1,17 @@
-import { Character } from '../../types/Character';
 import { limit } from '../../store/sagas/characters/constants';
 import { CharacterDataWrapper } from '../../types/CharacterDataWrapper';
 
 export class CharactersService {
-  public static get(offset: number, nameStartsWith?: string): Promise<Character[]> {
+  public static get(offset: number, nameStartsWith?: string): Promise<any> {
     CharactersService.abortController = new AbortController();
     CharactersService.fetchingInProgress = true;
     return fetch(`${CharactersService.baseUrl}${CharactersService.getQueryString(offset, nameStartsWith)}`, {
       signal: CharactersService.abortController.signal,
-    })
-      .then(res => res.json())
-      .then(CharactersService.handleResponse)
-      .catch(CharactersService.handleError)
-      .finally(CharactersService.handleFinally);
+    });
+  }
+
+  public static async handleJson(response: any): Promise<any> {
+    return response.json();
   }
 
   public static isFetching(): boolean {
@@ -28,21 +27,23 @@ export class CharactersService {
   private static fetchingInProgress = false;
   private static abortController: AbortController;
 
-  private static async handleResponse(wrapper: CharacterDataWrapper = {}): Promise<any> {
+  public static async handleResponse(wrapper: CharacterDataWrapper = {}): Promise<any> {
     const dataContainer = (wrapper as CharacterDataWrapper).hasOwnProperty('data') ? wrapper.data : null;
     return dataContainer
         ? dataContainer.hasOwnProperty('results') ? dataContainer.results : []
         : [];
   }
 
-  private static async handleError(error: Error): Promise<void> {
+  public static async handleError(error: Error): Promise<void> {
     if (error.name === 'AbortError') {
       console.log('fetch request was aborted');
     }
+    console.log('from handle error');
   }
 
-  private static async handleFinally(): Promise<void> {
+  public static async handleFinally(): Promise<void> {
     CharactersService.fetchingInProgress = false;
+    console.log('from handle finally');
   }
 
   private static getQueryString(offset: number, nameStartsWith?: string): string {
