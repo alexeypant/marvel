@@ -25,7 +25,12 @@ export const validateLoginInput = (data: DataToValidate) => {
   }
 
   return {
-    errors,
+    error: `${errors.email ? errors.email : ''} ${errors.password ? errors.password : ''} `,
     isValid: isEmpty(errors)
   }
+
+  // return {
+  //   errors,
+  //   isValid: isEmpty(errors)
+  // }
 };

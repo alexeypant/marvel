@@ -5,9 +5,7 @@ import ConnectedApp from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { sagaMiddleware, store } from './store';
-import {
-  rootSaga,
-} from './store/sagas/characters/sagas';
+import { rootSaga } from './store/sagas';
 
 sagaMiddleware.run(rootSaga);
 

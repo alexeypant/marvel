@@ -1,10 +1,10 @@
-import { State } from '../../types/State';
+import { CharactersState } from '../../types/State';
 import { initialState } from './constants';
 import { TRequestCharacterAction } from '../../actions/characters/actionCreators';
 import { CharactersAction } from '../../actions/characters/CharactersAction';
-import { Character } from '../../../types/Character';
+import { Character } from '../../../types/characters/Character';
 
-export const charactersRequestReducer = (state: State = initialState, action: TRequestCharacterAction): State => {
+export const charactersRequestReducer = (state: CharactersState = initialState, action: TRequestCharacterAction): CharactersState => {
   switch (action.type) {
     case CharactersAction.Request:
       return {

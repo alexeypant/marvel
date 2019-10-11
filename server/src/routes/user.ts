@@ -10,17 +10,16 @@ import { User } from '../database/models/User';
 const usersRouter = express.Router();
 
 usersRouter.post('/register', function(req, res) {
-
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if(!isValid) {
-    return res.status(400).json(errors);
+    return res.status(500).json(errors);
   }
   User.findOne({
     email: req.body.email
   }).then(user => {
     if(user) {
-      return res.status(400).json({
+      return res.status(500).json({
         email: 'Email already exists'
       });
     }
@@ -59,10 +58,13 @@ usersRouter.post('/register', function(req, res) {
 
 usersRouter.post('/login', (req, res) => {
 
-  const { errors, isValid } = validateLoginInput(req.body);
+  const { error, isValid } = validateLoginInput(req.body);
 
   if(!isValid) {
-    return res.status(400).json(errors);
+    return res.json({
+      isError: true,
+      error: error,
+    });
   }
 
   const email = req.body.email;
@@ -71,8 +73,11 @@ usersRouter.post('/login', (req, res) => {
   User.findOne({email})
   .then(user => {
     if(!user) {
-      errors.email = 'User not found'
-      return res.status(404).json(errors);
+      // errors.email = 'User not found';
+      return res.json({
+        isError: true,
+        error: 'User not found',
+      });
     }
     bcrypt.compare(password, user.password)
     .then(isMatch => {
@@ -81,22 +86,25 @@ usersRouter.post('/login', (req, res) => {
           id: user.id,
           name: user.name,
           avatar: user.avatar
-        }
+        };
         jwt.sign(payload, 'secret', {
           expiresIn: 3600
         }, (err, token) => {
           if(err) console.error('There is some error in token', err);
           else {
             res.json({
-              success: true,
+              isError: false,
+              error: '',
               token: `Bearer ${token}`
             });
           }
         });
       }
       else {
-        errors.password = 'Incorrect Password';
-        return res.status(400).json(errors);
+        return res.json({
+          isError: true,
+          error: 'Incorrect Password',
+        });
       }
     });
   });

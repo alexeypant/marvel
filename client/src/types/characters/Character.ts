@@ -3,8 +3,7 @@ import { ComicList } from './ComicList';
 import { StoryList } from './StoryList';
 import { EventList } from './EventList';
 import { SeriesList } from './SeriesList';
-import { CharacterAttribute } from '../enums/CharacterAttribute';
-
+import { CharacterAttribute } from '../../enums/CharacterAttribute';
 
 export type Character = {
   [CharacterAttribute.id]?: number; // The unique ID of the character resource.,

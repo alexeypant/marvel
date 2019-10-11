@@ -1,5 +1,5 @@
-import { Character } from '../../../types/Character';
 import { CharactersAction } from './CharactersAction';
+import { Character } from '../../../types/characters/Character';
 
 export const requestCharacter = () => {
   return {

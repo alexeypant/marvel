@@ -75,7 +75,7 @@ const CharactersTable: React.FC<Props> = ({ data = [], handleFetchCharacters, ha
 
 const mapStateToProps = (state: State) => {
   return {
-    data: convertCharacters(state.characters),
+    data: convertCharacters(state.characters.characters),
   };
 };
 

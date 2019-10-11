@@ -1,5 +1,4 @@
-import { put, call, takeEvery, throttle, debounce } from 'redux-saga/effects';
-import { CharactersAction } from '../../actions/characters/CharactersAction';
+import { put, call } from 'redux-saga/effects';
 import {
   debouncedFetch,
   FetchCharactersAction,
@@ -7,21 +6,15 @@ import {
   requestCharacterFailed,
   requestCharacterSuccess,
 } from '../../actions/characters/actionCreators';
-import { Character } from '../../../types/Character';
 import { CharactersService } from '../../../services/characters/CharactersService';
 import { BackoffFactory } from '../../../services/backoff/BackoffFactory';
+import { Character } from '../../../types/characters/Character';
 
-export function* rootSaga() {
-  yield takeEvery(CharactersAction.Fetch, fetchCharactersAsync);
-  yield debounce(500, CharactersAction.FetchNameStartsWith, throttleFetch);
-  yield throttle(1000, CharactersAction.DebouncedFetch, fetchCharactersAsync);
-}
-
-function* throttleFetch(action: FetchCharactersAction) {
+export function* throttleFetch(action: FetchCharactersAction) {
   yield put(debouncedFetch(action));
 }
 
-function* fetchCharactersAsync(action: FetchCharactersAction) {
+export function* fetchCharactersAsync(action: FetchCharactersAction) {
   CharactersService.isFetching() && CharactersService.abort();
   try {
     yield put(requestCharacter());

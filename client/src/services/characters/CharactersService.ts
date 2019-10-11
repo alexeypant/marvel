@@ -1,6 +1,6 @@
 import { limit } from '../../store/sagas/characters/constants';
-import { CharacterDataWrapper } from '../../types/CharacterDataWrapper';
-import { Character } from '../../types/Character';
+import { CharacterDataWrapper } from '../../types/characters/CharacterDataWrapper';
+import { Character } from '../../types/characters/Character';
 
 export class CharactersService {
   static request(offset: number, nameStartsWith?: string): Promise<Response> {
