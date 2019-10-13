@@ -1,4 +1,5 @@
 import React  from 'react';
+import './Button.css'
 
 type Props = {
   type: 'button' | 'submit' | 'reset' | undefined;

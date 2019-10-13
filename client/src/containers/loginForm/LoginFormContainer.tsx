@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 import { FormInputName } from '../../enums/FormInputName';
-import { LoginForm } from '../../components/loginForm/LoginForm';
+import { LoginForm } from '../../components/form/LoginForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../store/types/State';
 import { loginRequest } from '../../store/actions/login/actionCreators';
@@ -44,7 +44,7 @@ export const LoginFormContainer = () => {
 
   return (
     <LoginForm
-      title="New User Registration"
+      title="User Login"
       emailValue={email}
       passwordValue={password}
       error={error}

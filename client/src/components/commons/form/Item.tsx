@@ -1,6 +1,8 @@
 import React, { ChangeEvent } from 'react';
+import './Item.css';
 
 export type FormItemProps = {
+  label: string;
   type: string;
   placeholder: string;
   name: string;
@@ -8,8 +10,11 @@ export type FormItemProps = {
   value: string;
 };
 
-export const Item = ({ type, placeholder, name, onChange, value }: FormItemProps) => (
+export const Item = ({ label, type, placeholder, name, onChange, value }: FormItemProps) => (
   <div className="container">
+    <label className="label">
+      {label}
+    </label>
     <input
       className="input"
       type={type}

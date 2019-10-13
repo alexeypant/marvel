@@ -2,69 +2,53 @@ import React, { ChangeEvent, FormEvent } from 'react';
 import { Item } from '../commons/form/Item';
 import { FormInputName } from '../../enums/FormInputName';
 import { Button } from '../commons/form/Button';
+import './Form.css';
+import { Link } from 'react-router-dom';
 
-type RegisterFormProps = {
+type LoginFormProps = {
   title: string;
-  nameValue: string;
   emailValue: string;
   passwordValue: string;
-  passwordConfirmValue: string;
   error: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
-export const RegisterForm = (
+export const LoginForm = (
   {
     title,
-    nameValue,
     emailValue,
     passwordValue,
-    passwordConfirmValue,
     error,
     onChange,
     onSubmit,
-  }: RegisterFormProps) => {
+  }: LoginFormProps) => {
 
   return (
-    <div className="container">
-      <h2 className="header">{title}</h2>
-      {error && <div>{error}</div>}
-      <form onSubmit={onSubmit}>
+  <form className="form" onSubmit={onSubmit}>
+    <h2 className="header">Sign-in / <Link to={"/register"}>Sign-up</Link></h2>
+      {error && <div className="error">{error}</div>}
       <Item
-        type="text"
-        placeholder="Name"
-        name={FormInputName.Name}
-        value={nameValue}
-        onChange={onChange}
-      />
-      <Item
+        label="Email"
         type="email"
-        placeholder="Email"
+        placeholder=""
         name={FormInputName.Email}
         value={emailValue}
         onChange={onChange}
       />
       <Item
+        label="Password"
         type="password"
-        placeholder="Password"
+        placeholder=""
         name={FormInputName.Password}
         value={passwordValue}
-        onChange={onChange}
-      />
-      <Item
-        type="password"
-        placeholder={FormInputName.PasswordConfirm}
-        name="passwordConfirm"
-        value={passwordConfirmValue}
         onChange={onChange}
       />
       <Button
         type="submit"
       >
-        Register
+        Login
       </Button>
-      </form>
-    </div>
+  </form>
   );
 };

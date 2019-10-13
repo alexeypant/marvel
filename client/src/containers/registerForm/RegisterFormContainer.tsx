@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react';
-import { RegisterForm } from '../../components/registerForm/RegisterForm';
+import { RegisterForm } from '../../components/form/RegisterForm';
 import { FormInputName } from '../../enums/FormInputName';
 import { User } from '../../types/users/User';
 import { registerRequest } from '../../store/actions/register/actionCreators';
