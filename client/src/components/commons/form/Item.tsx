@@ -8,9 +8,10 @@ export type FormItemProps = {
   name: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   value: string;
+  isDisabled?: boolean;
 };
 
-export const Item = ({ label, type, placeholder, name, onChange, value }: FormItemProps) => (
+export const Item = ({ label, type, placeholder, name, onChange, value, isDisabled }: FormItemProps) => (
   <div className="container">
     <label className="label">
       {label}
@@ -23,6 +24,7 @@ export const Item = ({ label, type, placeholder, name, onChange, value }: FormIt
       onChange={onChange}
       value={value}
       required={true}
+      disabled={isDisabled}
     />
   </div>
 );

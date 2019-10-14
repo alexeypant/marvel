@@ -1,4 +1,4 @@
-import { User } from '../../types/users/User';
+import { RegisterData } from '../../types/users/RegisterData';
 
 export type AuthResult = {
   isError: boolean,
@@ -7,9 +7,8 @@ export type AuthResult = {
 };
 
 export class AuthService {
-  // private static readonly baseUrl = '';
 
-  public static register(user: User, history?: any) {
+  public static register(user: RegisterData, history?: any) {
     return fetch('/api/users/register', {
       method: 'POST',
       mode: 'cors',
@@ -20,7 +19,6 @@ export class AuthService {
       },
       body: JSON.stringify(user),
     })
-    // .then(res => history.push('/login'))
     .then((res) => {
       if (res.status === 500) {
         return {
@@ -32,8 +30,6 @@ export class AuthService {
         isError: false,
         error: '',
       };
-      // console.log('res: ' + res);
-      // console.log('need to change history');
     })
     .catch((err) => {
       return  {

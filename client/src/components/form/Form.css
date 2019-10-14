@@ -23,3 +23,7 @@
   color: #6c6763;
   padding-right: 2px;
 }
+
+.error {
+  color: red;
+}

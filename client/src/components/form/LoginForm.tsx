@@ -4,29 +4,30 @@ import { FormInputName } from '../../enums/FormInputName';
 import { Button } from '../commons/form/Button';
 import './Form.css';
 import { Link } from 'react-router-dom';
+import { ERoute } from '../../enums/Route';
 
 type LoginFormProps = {
-  title: string;
   emailValue: string;
   passwordValue: string;
   error: string;
+  isDisabled: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
 export const LoginForm = (
   {
-    title,
     emailValue,
     passwordValue,
     error,
+    isDisabled,
     onChange,
     onSubmit,
   }: LoginFormProps) => {
 
   return (
   <form className="form" onSubmit={onSubmit}>
-    <h2 className="header">Sign-in / <Link to={"/register"}>Sign-up</Link></h2>
+    <h2 className="header">Sign-in / <Link to={ERoute.register}>Sign-up</Link></h2>
       {error && <div className="error">{error}</div>}
       <Item
         label="Email"
@@ -34,6 +35,7 @@ export const LoginForm = (
         placeholder=""
         name={FormInputName.Email}
         value={emailValue}
+        isDisabled={isDisabled}
         onChange={onChange}
       />
       <Item
@@ -42,10 +44,12 @@ export const LoginForm = (
         placeholder=""
         name={FormInputName.Password}
         value={passwordValue}
+        isDisabled={isDisabled}
         onChange={onChange}
       />
       <Button
         type="submit"
+        disabled={isDisabled}
       >
         Login
       </Button>

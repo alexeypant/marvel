@@ -1,6 +1,6 @@
 import {
   LoginAction,
-  logingSuccess,
+  loginSuccess,
   loginPending,
   loginReject,
 } from '../../actions/login/actionCreators';
@@ -19,7 +19,7 @@ export function* loginAsync(action: LoginAction) {
       yield TokenService.set(loginResult.token || ''); // todo: handle empty token
       const decoded = yield TokenService.decode(loginResult.token || '');
       yield put(setCurrentUser(decoded));
-      yield put(logingSuccess());
+      yield put(loginSuccess());
     }
   } catch (error) {
     yield put(loginReject(error));

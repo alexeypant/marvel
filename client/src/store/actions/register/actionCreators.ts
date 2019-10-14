@@ -1,13 +1,13 @@
 import { RegisterActionName } from './RegisterActionName';
-import { User } from '../../../types/users/User';
+import { RegisterData } from '../../../types/users/RegisterData';
 
 export type RegisterAction = {
   type: RegisterActionName;
-  user: User;
+  user: RegisterData;
   error?: any;
 };
 
-export const registerRequest = (user: User) => {
+export const registerRequest = (user: RegisterData) => {
   return {
     user,
     type: RegisterActionName.RegisterRequest,
@@ -20,15 +20,21 @@ export const registerPending = () => {
   };
 };
 
+export const registerReject = (error: string) => {
+  return {
+    error,
+    type: RegisterActionName.RegisterReject,
+  };
+};
+
 export const registerSuccess = () => {
   return {
     type: RegisterActionName.RegisterSuccess,
   };
 };
 
-export const registerReject = (error: string) => {
+export const registerClearState = () => {
   return {
-    error,
-    type: RegisterActionName.RegisterReject,
+    type: RegisterActionName.RegisterClearState,
   };
 };

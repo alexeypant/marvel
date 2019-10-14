@@ -1,18 +1,18 @@
-import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
 import { RegisterForm } from '../../components/form/RegisterForm';
-import { FormInputName } from '../../enums/FormInputName';
-import { User } from '../../types/users/User';
-import { registerRequest } from '../../store/actions/register/actionCreators';
+import { registerClearState, registerRequest } from '../../store/actions/register/actionCreators';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../store/types/State';
+import { RegisterData } from '../../types/users/RegisterData';
+import { initialRegisterData } from './constants';
+import { useHistory } from 'react-router-dom';
+import { ERoute } from '../../enums/Route';
 
 export const RegisterFormContainer = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [registerData, setRegisterData] = useState<RegisterData>(initialRegisterData);
   const [formError, setFormError] = useState('');
-  const { isError, error } = useSelector(state => (state as State).register);
+  const { isRegisterPending, isRegistered, isError, error } = useSelector(state => (state as State).register);
+  const history = useHistory();
   const dispatch = useDispatch();
   const errorDescription = formError.length > 0
     ? formError
@@ -23,55 +23,49 @@ export const RegisterFormContainer = () => {
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const trimmedValue = event.target.value.trim();
-      if (trimmedValue.length > 0) {
-        switch (event.target.name) {
-          case FormInputName.Name: {
-            setName(trimmedValue);
-            break;
-          }
-          case FormInputName.Email: {
-            setEmail(trimmedValue);
-            break;
-          }
-          case FormInputName.Password: {
-            setPassword(trimmedValue);
-            break;
-          }
-          case FormInputName.PasswordConfirm: {
-            setPasswordConfirm(trimmedValue);
-            break;
-          }
-        }
-      }
+      setRegisterData({
+        ...registerData,
+        [event.target.name]: trimmedValue,
+      });
     },
-    [],
+    [registerData],
   );
 
   const handleSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      if (password !== passwordConfirm) {
+      if (registerData.password !== registerData.passwordConfirm) {
         setFormError('passwords should match');
       } else {
-        const user: User = {
-          name,
-          email,
-          password,
-        };
-        dispatch(registerRequest(user));
+        dispatch(registerRequest(registerData));
       }
     },
-    [name, email, password, passwordConfirm],
+    [registerData],
   );
+
+  const handleRedirect = useCallback(
+    () => {
+      if (isRegistered) {
+        setRegisterData(initialRegisterData);
+        history.push(ERoute.login);
+        dispatch(registerClearState());
+      }
+    },
+    [isRegistered],
+  );
+
+  useEffect(() => {
+    handleRedirect();
+  }, [isRegistered]);
 
   return (
     <RegisterForm
-      title="New User Registration"
-      nameValue={name}
-      emailValue={email}
-      passwordValue={password}
-      passwordConfirmValue={passwordConfirm}
+      nameValue={registerData.name}
+      emailValue={registerData.email}
+      passwordValue={registerData.password}
+      passwordConfirmValue={registerData.passwordConfirm}
       error={errorDescription}
+      isDisabled={isRegisterPending}
       onChange={handleChange}
       onSubmit={handleSubmit}
     />

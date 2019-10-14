@@ -13,19 +13,29 @@ export const registerReducer = (state: RegisterState = initialRegisterState, act
         isError: false,
         error: '',
       };
+    case RegisterActionName.RegisterReject:
+      return {
+        ...state,
+        isRegistered: false,
+        isRegisterPending: false,
+        isError: true,
+        error: action.error,
+      };
     case RegisterActionName.RegisterSuccess:
       return {
+        ...state,
         isRegistered: true,
         isRegisterPending: false,
         isError: false,
         error: '',
       };
-    case RegisterActionName.RegisterReject:
+    case RegisterActionName.RegisterClearState:
       return {
+        ...state,
         isRegistered: false,
         isRegisterPending: false,
-        isError: true,
-        error: action.error,
+        isError: false,
+        error: '',
       };
     default:
       return state;

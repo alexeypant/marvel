@@ -1,20 +1,28 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import { NavBar } from './components/navBar/NavBar';
 import { CharactersTableConnected } from './containers';
 import { RegisterFormContainer } from './containers/registerForm/RegisterFormContainer';
 import { LoginFormContainer } from './containers/loginForm/LoginFormContainer';
+import { NavBarContainer } from './containers/navBar/NavBarContainer';
+import { About } from './components/about/About';
+import { PrivateRoute } from './containers/privateRoute/PrivateRoute';
+import { ERoute } from './enums/Route';
 
 const App: React.FC = () => (
   <Router>
     <div>
-      <NavBar/>
-        <Route exact={true} path="/" component={CharactersTableConnected} />
-        <div className="container">
-          <Route exact={true} path="/register" component={RegisterFormContainer} />
-          <Route exact={true} path="/login" component={LoginFormContainer} />
-        </div>
+      <NavBarContainer/>
+      <Route exact={true} path={ERoute.root} component={About} />
+      <div className="container">
+        <Switch>
+          <Route exact={true} path={ERoute.register} component={RegisterFormContainer} />
+          <Route exact={true} path={ERoute.login} component={LoginFormContainer} />
+          <PrivateRoute exact={true} path={ERoute.characters}>
+            <CharactersTableConnected/>
+          </PrivateRoute>
+        </Switch>
+      </div>
     </div>
   </Router>
 );

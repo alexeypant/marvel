@@ -4,26 +4,27 @@ import { FormInputName } from '../../enums/FormInputName';
 import { Button } from '../commons/form/Button';
 import './Form.css';
 import { Link } from 'react-router-dom';
+import { ERoute } from '../../enums/Route';
 
 type RegisterFormProps = {
-  title: string;
   nameValue: string;
   emailValue: string;
   passwordValue: string;
   passwordConfirmValue: string;
   error: string;
+  isDisabled: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
 export const RegisterForm = (
   {
-    title,
     nameValue,
     emailValue,
     passwordValue,
     passwordConfirmValue,
     error,
+    isDisabled,
     onChange,
     onSubmit,
   }: RegisterFormProps) => {
@@ -31,7 +32,7 @@ export const RegisterForm = (
   return (
 
       <form className="form" onSubmit={onSubmit}>
-          <h2 className="header"><Link to={"/login"}>Sign-in</Link> / Sign-up</h2>
+          <h2 className="header"><Link to={ERoute.login}>Sign-in</Link> / Sign-up</h2>
           {error && <div className="error">{error}</div>}
           <Item
             label="Name"
@@ -39,6 +40,7 @@ export const RegisterForm = (
             placeholder=""
             name={FormInputName.Name}
             value={nameValue}
+            isDisabled={isDisabled}
             onChange={onChange}
           />
           <Item
@@ -47,6 +49,7 @@ export const RegisterForm = (
             placeholder=""
             name={FormInputName.Email}
             value={emailValue}
+            isDisabled={isDisabled}
             onChange={onChange}
           />
           <Item
@@ -55,6 +58,7 @@ export const RegisterForm = (
             placeholder=""
             name={FormInputName.Password}
             value={passwordValue}
+            isDisabled={isDisabled}
             onChange={onChange}
           />
           <Item
@@ -63,9 +67,11 @@ export const RegisterForm = (
             placeholder=""
             name={FormInputName.PasswordConfirm}
             value={passwordConfirmValue}
+            isDisabled={isDisabled}
             onChange={onChange}
           />
           <Button
+            disabled={isDisabled}
             type="submit"
           >
             Register

@@ -13,6 +13,13 @@ export const loginReducer = (state: LoginState = initialLoginState, action: Logi
         isError: false,
         error: '',
       };
+    case LoginActionName.LoginReject:
+      return {
+        isLoggedIn: false,
+        isLoginPending: false,
+        isError: true,
+        error: action.error,
+      };
     case LoginActionName.LoginSuccess:
       return {
         isLoggedIn: true,
@@ -20,12 +27,12 @@ export const loginReducer = (state: LoginState = initialLoginState, action: Logi
         isError: false,
         error: '',
       };
-    case LoginActionName.LoginReject:
+    case LoginActionName.LoginClearState:
       return {
         isLoggedIn: false,
         isLoginPending: false,
-        isError: true,
-        error: action.error,
+        isError: false,
+        error: '',
       };
     default:
       return state;

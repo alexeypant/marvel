@@ -11,7 +11,11 @@ export function* registerAsync(action: RegisterAction) {
   try {
     yield put(registerPending());
     const registerResult: AuthResult = yield AuthService.register(action.user);
-    registerResult.isError ? yield put(registerReject(registerResult.error)) : yield put(registerSuccess());
+    if (registerResult.isError) {
+      yield put(registerReject(registerResult.error));
+    } else {
+      yield put(registerSuccess());
+    }
   } catch (error) {
     yield put(registerReject(error));
   }

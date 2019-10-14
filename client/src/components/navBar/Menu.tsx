@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { MenuItemProps } from './Item';
+import './navBar.css';
 
 type MenuProps = {
   children: ReactElement<MenuItemProps>[];

@@ -20,15 +20,21 @@ export const loginPending = () => {
   };
 };
 
-export const logingSuccess = () => {
+export const loginReject = (error: string) => {
+  return {
+    error,
+    type: LoginActionName.LoginReject,
+  };
+};
+
+export const loginSuccess = () => {
   return {
     type: LoginActionName.LoginSuccess,
   };
 };
 
-export const loginReject = (error: string) => {
+export const loginClearState = () => {
   return {
-    error,
-    type: LoginActionName.LoginReject,
+    type: LoginActionName.LoginClearState,
   };
 };
