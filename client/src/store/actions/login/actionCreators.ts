@@ -3,7 +3,7 @@ import { User } from '../../../types/users/User';
 
 export type LoginAction = {
   type: LoginActionName;
-  user: string;
+  user: User;
   error?: any;
 };
 

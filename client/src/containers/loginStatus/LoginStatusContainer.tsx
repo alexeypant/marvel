@@ -6,6 +6,7 @@ import { setCurrentUser } from '../../store/actions/auth/actionCreators';
 import { useHistory } from 'react-router-dom';
 import { ERoute } from '../../enums/Route';
 import { LoginStatus } from '../../components/loginStatus/LoginStatus';
+import { emptyUser } from '../../store/reducers/auth/constants';
 
 export const LoginStatusContainer = () => {
   const { isAuthenticated, user } = useSelector(state => (state as State).auth);
@@ -24,7 +25,7 @@ export const LoginStatusContainer = () => {
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       event.preventDefault();
       TokenService.remove();
-      dispatch(setCurrentUser({}));
+      dispatch(setCurrentUser(emptyUser));
       history.push(ERoute.login);
     },
     [],

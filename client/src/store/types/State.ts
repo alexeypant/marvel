@@ -1,4 +1,5 @@
 import { Character } from '../../types/characters/Character';
+import { User } from '../../types/users/User';
 
 export type CharactersState = {
   characters: Character[];
@@ -22,7 +23,7 @@ export type RegisterState = {
 
 export type AuthState = {
   isAuthenticated: boolean;
-  user: any;  // todo: type for user auth
+  user: User;
 };
 
 export type State = {

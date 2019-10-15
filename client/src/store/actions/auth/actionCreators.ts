@@ -1,11 +1,12 @@
 import { AuthActionName } from './AuthActionName';
+import { User } from '../../../types/users/User';
 
 export type AuthAction = {
   type: AuthActionName;
-  user: any; // todo auth user type
+  user: User;
 };
 
-export const setCurrentUser = (user: any) => {
+export const setCurrentUser = (user: User) => {
   return {
     user,
     type: AuthActionName.SetCurrentUser,

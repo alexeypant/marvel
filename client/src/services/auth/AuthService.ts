@@ -1,4 +1,5 @@
 import { RegisterData } from '../../types/users/RegisterData';
+import { User } from '../../types/users/User';
 
 export type AuthResult = {
   isError: boolean,
@@ -8,7 +9,7 @@ export type AuthResult = {
 
 export class AuthService {
 
-  public static register(user: RegisterData, history?: any) {
+  public static register(user: RegisterData) {
     return fetch('/api/users/register', {
       method: 'POST',
       mode: 'cors',
@@ -39,7 +40,7 @@ export class AuthService {
     });
   }
 
-  public static login(user: string) {
+  public static login(user: User) {
     return fetch('/api/users/login', {
       method: 'POST',
       credentials: 'include',

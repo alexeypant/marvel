@@ -16,7 +16,7 @@ export function* loginAsync(action: LoginAction) {
     if (loginResult.isError) {
       yield put(loginReject(loginResult.error));
     } else {
-      yield TokenService.set(loginResult.token || ''); // todo: handle empty token
+      yield TokenService.set(loginResult.token || '');
       const decoded = yield TokenService.decode(loginResult.token || '');
       yield put(setCurrentUser(decoded));
       yield put(loginSuccess());
