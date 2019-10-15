@@ -1,37 +1,20 @@
-
 .word {
+  background-color: red;
   text-align: center;
   display: flex;
   flex-direction: row;
   position: fixed;
-  top: 50%;
+  top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.m {
-  animation-delay: .0s;
-}
-
-.a {
-  animation-delay: .1s;
-}
-
-.r {
-  animation-delay: .2s;
-}
-
-.v {
-  animation-delay: .3s;
-}
-
-.e {
-  animation-delay: .4s;
-}
-
-.l {
-  animation-delay: .5s;
-}
+.m { animation-delay: .0s; }
+.a { animation-delay: .1s; }
+.r { animation-delay: .2s; }
+.v { animation-delay: .3s; }
+.e { animation-delay: .4s; }
+.l { animation-delay: .5s; }
 
 .letter {
   font-family: "Arial Black";
@@ -42,8 +25,6 @@
   animation-name: slide-in-elliptic-top-fwd;
   animation-duration: .5s;
 }
-
-
 
 .slide-in-elliptic-top-fwd {
   animation: slide-in-elliptic-top-fwd 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;

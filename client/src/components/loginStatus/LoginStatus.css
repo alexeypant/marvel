@@ -1,0 +1,18 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  background-color: #333;
+  flex: 1;
+}
+
+.login-container:hover {
+  background-color: #111;
+}
+
+.login-container svg {
+  align-self: center;
+  stroke: red;
+  fill: red;
+}

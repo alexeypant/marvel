@@ -27,7 +27,7 @@ export const LoginForm = (
 
   return (
   <form className="form" onSubmit={onSubmit}>
-    <h2 className="header">Sign-in / <Link to={ERoute.register}>Sign-up</Link></h2>
+    <h2 className="header">Login / <Link to={ERoute.register}>Register</Link></h2>
       {error && <div className="error">{error}</div>}
       <Item
         label="Email"

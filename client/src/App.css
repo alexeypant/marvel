@@ -1,11 +1,21 @@
-.App {
-  text-align: center;
-  background-color: #ffffff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: black;
+.nav-bar-container {
+  grid-area: navbar;
+}
+
+.login-container {
+  grid-area: login;
+}
+
+.content-container {
+  grid-area: content;
+}
+
+.app-container {
+  margin: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 49px 500px auto;
+  grid-template-areas:
+          "navbar  navbar  navbar  navbar  navbar  navbar  navbar  login"
+          "content content content content content content content content"
 }

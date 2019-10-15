@@ -32,7 +32,7 @@ export const RegisterForm = (
   return (
 
       <form className="form" onSubmit={onSubmit}>
-          <h2 className="header"><Link to={ERoute.login}>Sign-in</Link> / Sign-up</h2>
+          <h2 className="header"><Link to={ERoute.login}>Login</Link> / Register</h2>
           {error && <div className="error">{error}</div>}
           <Item
             label="Name"
