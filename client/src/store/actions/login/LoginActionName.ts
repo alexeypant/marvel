@@ -4,5 +4,4 @@ export enum LoginActionName {
   LoginReject = 'LOGIN_REJECT',
   LoginSuccess = 'LOGIN_SUCCESS',
   LoginClearState = 'LOGIN_CLEAR_STATE',
-  GetErrors = 'GET_ERRORS',
 }

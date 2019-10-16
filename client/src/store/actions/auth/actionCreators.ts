@@ -12,3 +12,9 @@ export const setCurrentUser = (user: User) => {
     type: AuthActionName.SetCurrentUser,
   };
 };
+
+export const logout = () => {
+  return {
+    type: AuthActionName.Logout,
+  };
+};
