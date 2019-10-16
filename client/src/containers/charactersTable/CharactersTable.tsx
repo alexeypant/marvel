@@ -21,7 +21,7 @@ const CharactersTable: React.FC<Props> = ({ data = [], handleFetchCharacters, ha
 
   useEffect(() => {
     handleFetchCharacters(0);
-  }, []);
+  }, [handleFetchCharacters]);
 
   const handleClickNext = useCallback(
     () => {
@@ -30,7 +30,7 @@ const CharactersTable: React.FC<Props> = ({ data = [], handleFetchCharacters, ha
       setIsDisabledPrevious(false);
       handleFetchCharacters(nextOffset);
     },
-    [offset, isDisabledPrevious],
+    [offset, setOffset, setIsDisabledPrevious, handleFetchCharacters],
   );
 
   const handleClickPrevious = useCallback(
@@ -42,7 +42,7 @@ const CharactersTable: React.FC<Props> = ({ data = [], handleFetchCharacters, ha
       setOffset(nextOffset);
       handleFetchCharacters(nextOffset);
     },
-    [offset, isDisabledPrevious],
+    [offset, setIsDisabledPrevious, setOffset, handleFetchCharacters],
   );
 
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {

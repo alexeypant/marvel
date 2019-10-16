@@ -22,7 +22,7 @@ export const LoginFormContainer = () => {
         [event.target.name]: trimmedValue,
       });
     },
-    [loginData],
+    [loginData, setLoginData],
   );
 
   const handleSubmit = useCallback(
@@ -30,7 +30,7 @@ export const LoginFormContainer = () => {
       event.preventDefault();
       dispatch(loginRequest(loginData));
     },
-    [loginData],
+    [loginData, dispatch],
   );
 
   const handleRedirect = useCallback(
@@ -41,12 +41,12 @@ export const LoginFormContainer = () => {
         dispatch(loginClearState());
       }
     },
-    [isLoggedIn],
+    [isLoggedIn, setLoginData, history, dispatch],
   );
 
   useEffect(() => {
     handleRedirect();
-  }, [isLoggedIn]);
+  }, [isLoggedIn, handleRedirect]);
 
   return (
     <LoginForm

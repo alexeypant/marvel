@@ -28,7 +28,7 @@ export const RegisterFormContainer = () => {
         [event.target.name]: trimmedValue,
       });
     },
-    [registerData],
+    [registerData, setRegisterData],
   );
 
   const handleSubmit = useCallback(
@@ -40,7 +40,7 @@ export const RegisterFormContainer = () => {
         dispatch(registerRequest(registerData));
       }
     },
-    [registerData],
+    [registerData, setFormError, dispatch],
   );
 
   const handleRedirect = useCallback(
@@ -51,12 +51,12 @@ export const RegisterFormContainer = () => {
         dispatch(registerClearState());
       }
     },
-    [isRegistered],
+    [isRegistered, setRegisterData, history, dispatch],
   );
 
   useEffect(() => {
     handleRedirect();
-  }, [isRegistered]);
+  }, [isRegistered, handleRedirect]);
 
   return (
     <RegisterForm

@@ -18,7 +18,7 @@ export const LoginStatusContainer = () => {
       event.preventDefault();
       history.push(ERoute.login);
     },
-    [],
+    [history],
   );
 
   const handleLogout = useCallback(
@@ -28,7 +28,7 @@ export const LoginStatusContainer = () => {
       dispatch(setCurrentUser(emptyUser));
       history.push(ERoute.login);
     },
-    [],
+    [history, dispatch],
   );
 
   return (
