@@ -20,16 +20,11 @@ export class AuthService {
       },
       body: JSON.stringify(user),
     })
-    .then((res) => {
-      if (res.status === 500) {
-        return {
-          isError: true,
-          error: 'some trouble with register user data',
-        };
-      }
+    .then(response => response.json())
+    .then((response) => {
       return {
-        isError: false,
-        error: '',
+        isError: response.isError,
+        error: response.error,
       };
     })
     .catch((err) => {

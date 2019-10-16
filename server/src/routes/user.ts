@@ -10,17 +10,21 @@ import { User } from '../database/models/User';
 const usersRouter = express.Router();
 
 usersRouter.post('/register', function(req, res) {
-  const { errors, isValid } = validateRegisterInput(req.body);
+  const { error, isValid } = validateRegisterInput(req.body);
 
   if(!isValid) {
-    return res.status(500).json(errors);
+    return res.status(200).json({
+      isError: true,
+      error,
+    });
   }
   User.findOne({
     email: req.body.email
   }).then(user => {
     if(user) {
-      return res.status(500).json({
-        email: 'Email already exists'
+      return res.status(200).json({
+        isError: true,
+        error: 'Email already exists'
       });
     }
     else {
@@ -57,9 +61,7 @@ usersRouter.post('/register', function(req, res) {
 });
 
 usersRouter.post('/login', (req, res) => {
-
   const { error, isValid } = validateLoginInput(req.body);
-
   if(!isValid) {
     return res.json({
       isError: true,
@@ -67,13 +69,10 @@ usersRouter.post('/login', (req, res) => {
     });
   }
 
-  const email = req.body.email;
-  const password = req.body.password;
-
+  const { email, password } = req.body;
   User.findOne({email})
   .then(user => {
     if(!user) {
-      // errors.email = 'User not found';
       return res.json({
         isError: true,
         error: 'User not found',
