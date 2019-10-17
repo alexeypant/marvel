@@ -1,27 +1,36 @@
-import React  from 'react';
+import React, { useCallback } from 'react';
 import { Route, Redirect, RouteProps, RouteComponentProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { State } from '../../store/types/State';
 import { ERoute } from '../../enums/Route';
 
-export const PrivateRoute = ({ children, ...rest }: RouteProps) => {
+// the PrivateRoute takes component to render as "component" prop, not as "children" prop
+interface PrivateRouteProps extends RouteProps {
+  component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
+}
+
+export const PrivateRoute = ({ component, ...rest }: PrivateRouteProps) => {
   const { isAuthenticated } = useSelector(state => (state as State).auth);
+  const handleRender = useCallback(
+    ({ location }: RouteComponentProps<any>): React.ReactNode => {
 
-  const handleRender = ({ location }: RouteComponentProps<any>): React.ReactNode => {
+      const toLogin = {
+        pathname: ERoute.login,
+        state: { from: location },
+      };
 
-    const toDetails = {
-      pathname: ERoute.login,
-      state: { from: location },
-    };
-
-    return isAuthenticated ? (
-      children
-    ) : (
-      <Redirect
-        to={toDetails}
-      />
-    );
-  };
+      if (component) {
+        return isAuthenticated ? (
+          React.createElement(component)
+        ) : (
+          <Redirect
+            to={toLogin}
+          />
+        );
+      }
+      throw new Error('Please provide a component to render as props for PrivateRoute');
+    }, [isAuthenticated, component],
+  );
 
   return (
     <Route

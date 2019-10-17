@@ -25,9 +25,7 @@ const App: React.FC = () => (
           <Switch>
             <Route exact={true} path={ERoute.register} component={RegisterFormContainer} />
             <Route exact={true} path={ERoute.login} component={LoginFormContainer} />
-            <PrivateRoute exact={true} path={ERoute.characters}>
-              <CharactersTableConnected/>
-            </PrivateRoute>
+            <PrivateRoute exact={true} path={ERoute.characters} component={CharactersTableConnected}/>
           </Switch>
         </div>
       </div>
