@@ -4,17 +4,17 @@ import './App.css';
 import { CharactersTableConnected } from './containers';
 import { RegisterFormContainer } from './containers/registerForm/RegisterFormContainer';
 import { LoginFormContainer } from './containers/loginForm/LoginFormContainer';
-import { NavBarContainer } from './containers/navBar/NavBarContainer';
 import { About } from './components/about/About';
 import { PrivateRoute } from './containers/privateRoute/PrivateRoute';
 import { ERoute } from './enums/Route';
 import { LoginStatusContainer } from './containers/loginStatus/LoginStatusContainer';
+import { NavBar } from './components/navBar/NavBar';
 
 const App: React.FC = () => (
   <Router>
     <div className="app-container">
       <div className="nav-bar-container">
-        <NavBarContainer/>
+        <NavBar/>
       </div>
       <div className="login-container">
         <LoginStatusContainer/>

@@ -18,10 +18,14 @@
   text-decoration: none;
 }
 
-.list .item a:hover {
+.list a:hover {
   background-color: #111;
 }
 
-.list .item .active {
+.list .active {
+  background-color: #4CAF50;
+}
+
+.list .active a:hover {
   background-color: #4CAF50;
 }
