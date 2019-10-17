@@ -9,6 +9,7 @@ import { PrivateRoute } from './containers/privateRoute/PrivateRoute';
 import { ERoute } from './enums/Route';
 import { LoginStatusContainer } from './containers/loginStatus/LoginStatusContainer';
 import { NavBar } from './components/navBar/NavBar';
+import { NoMatch } from './components/nomatch/NoMatch';
 
 const App: React.FC = () => (
   <Router>
@@ -20,14 +21,13 @@ const App: React.FC = () => (
         <LoginStatusContainer/>
       </div>
       <div className="content-container">
-        <Route exact={true} path={ERoute.root} component={About} />
-        <div >
-          <Switch>
-            <Route exact={true} path={ERoute.register} component={RegisterFormContainer} />
-            <Route exact={true} path={ERoute.login} component={LoginFormContainer} />
-            <PrivateRoute exact={true} path={ERoute.characters} component={CharactersTableConnected}/>
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact={true} path={ERoute.root} component={About}/>
+          <Route exact={true} path={ERoute.register} component={RegisterFormContainer}/>
+          <Route exact={true} path={ERoute.login} component={LoginFormContainer}/>
+          <PrivateRoute exact={true} path={ERoute.characters} component={CharactersTableConnected}/>
+          <Route path="*" component={NoMatch}/>
+        </Switch>
       </div>
     </div>
   </Router>
