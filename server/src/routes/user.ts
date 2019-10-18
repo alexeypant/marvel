@@ -1,5 +1,4 @@
 import * as express from 'express';
-import * as gravatar from 'gravatar';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import * as passport from 'passport';
@@ -28,16 +27,10 @@ usersRouter.post('/register', function(req, res) {
       });
     }
     else {
-      const avatar = gravatar.url(req.body.email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm'
-      });
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        avatar
       });
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -84,7 +77,6 @@ usersRouter.post('/login', (req, res) => {
         const payload = {
           id: user.id,
           name: user.name,
-          avatar: user.avatar
         };
         jwt.sign(payload, 'secret', {
           expiresIn: 3600
