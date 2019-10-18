@@ -1,5 +1,6 @@
 import { RegisterData } from '../../types/users/RegisterData';
 import { User } from '../../types/users/User';
+import { HTTPService } from '../http/HTTPService';
 
 export type AuthResult = {
   isError: boolean,
@@ -7,50 +8,42 @@ export type AuthResult = {
   token?: string;
 };
 
+type ServerResponse = {
+  isError: boolean;
+  error: string;
+  token?: string;
+};
+
 export class AuthService {
+  private static readonly registerUrl = '/api/users/register';
+  private static readonly loginUrl = '/api/users/login';
 
   public static register(user: RegisterData): Promise<AuthResult> {
-    return fetch('/api/users/register', {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    })
+    return HTTPService.post(AuthService.registerUrl, user)
     .then<any>(response => response.json())
-    .then<AuthResult>((response) => {
-      return {
-        isError: response.isError,
-        error: response.error,
-      };
-    })
-    .catch<AuthResult>((err) => {
-      return  {
-        isError: true,
-        error: err,
-      };
-    });
+    .then<AuthResult>(AuthService.handleResponse)
+    .catch<AuthResult>(AuthService.handleError);
   }
 
   public static login(user: User): Promise<AuthResult> {
-    return fetch('/api/users/login', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    })
+    return HTTPService.post(AuthService.loginUrl, user)
     .then(response => response.json())
-    .then<AuthResult>(res => res)
-    .catch<AuthResult>((err) => {
-      return  {
-        isError: true,
-        error: err,
-      };
-    });
+    .then<AuthResult>(AuthService.handleResponse)
+    .catch<AuthResult>(AuthService.handleError);
+  }
+
+  private static handleResponse(response: ServerResponse): AuthResult {
+    return {
+      isError: response.isError,
+      error: response.error,
+      token: response.token ? response.token : '',
+    };
+  }
+
+  private static handleError(error: string): AuthResult {
+    return {
+      error,
+      isError: true,
+    };
   }
 }

@@ -1,14 +1,15 @@
 import { limit } from '../../store/sagas/characters/constants';
 import { CharacterDataWrapper } from '../../types/characters/CharacterDataWrapper';
 import { Character } from '../../types/characters/Character';
+import { HTTPService } from '../http/HTTPService';
 
 export class CharactersService {
   static request(offset: number, nameStartsWith?: string): Promise<Response> {
     CharactersService.abortController = new AbortController();
     CharactersService.fetchingInProgress = true;
-    return fetch(`${CharactersService.baseUrl}${CharactersService.getQueryString(offset, nameStartsWith)}`, {
-      signal: CharactersService.abortController.signal,
-    });
+    const url = `${CharactersService.baseUrl}${CharactersService.getQueryString(offset, nameStartsWith)}`;
+    const abortSignal = CharactersService.abortController.signal;
+    return HTTPService.get(url, abortSignal);
   }
 
   static async parseJson(response: Response): Promise<CharacterDataWrapper> {
