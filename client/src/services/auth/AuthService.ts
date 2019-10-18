@@ -9,7 +9,7 @@ export type AuthResult = {
 
 export class AuthService {
 
-  public static register(user: RegisterData) {
+  public static register(user: RegisterData): Promise<AuthResult> {
     return fetch('/api/users/register', {
       method: 'POST',
       mode: 'cors',
@@ -20,14 +20,14 @@ export class AuthService {
       },
       body: JSON.stringify(user),
     })
-    .then(response => response.json())
-    .then((response) => {
+    .then<any>(response => response.json())
+    .then<AuthResult>((response) => {
       return {
         isError: response.isError,
         error: response.error,
       };
     })
-    .catch((err) => {
+    .catch<AuthResult>((err) => {
       return  {
         isError: true,
         error: err,
@@ -35,7 +35,7 @@ export class AuthService {
     });
   }
 
-  public static login(user: User) {
+  public static login(user: User): Promise<AuthResult> {
     return fetch('/api/users/login', {
       method: 'POST',
       credentials: 'include',
@@ -45,7 +45,12 @@ export class AuthService {
       body: JSON.stringify(user),
     })
     .then(response => response.json())
-    .then(res => res)
-    .catch(err => console.log(err));
+    .then<AuthResult>(res => res)
+    .catch<AuthResult>((err) => {
+      return  {
+        isError: true,
+        error: err,
+      };
+    });
   }
 }

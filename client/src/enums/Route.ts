@@ -3,4 +3,5 @@ export enum ERoute {
   login = '/login',
   register = '/register',
   characters = '/characters',
+  noMatch = '*',
 }

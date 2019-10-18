@@ -26,7 +26,7 @@ const App: React.FC = () => (
           <Route exact={true} path={ERoute.register} component={RegisterFormContainer}/>
           <Route exact={true} path={ERoute.login} component={LoginFormContainer}/>
           <PrivateRoute exact={true} path={ERoute.characters} component={CharactersTableConnected}/>
-          <Route path="*" component={NoMatch}/>
+          <Route path={ERoute.noMatch} component={NoMatch}/>
         </Switch>
       </div>
     </div>
